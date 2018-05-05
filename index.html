@@ -52,7 +52,7 @@ body {
 
 	function updateTime() {
 		// Dublin time
-		var currentLocalTime = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Dublin' }))
+		var currentLocalTime = new Date()
 		var currentDay = formatTime(currentLocalTime.getDate())
 		var currentMonth = formatTime(currentLocalTime.getMonth() + 1)
 		var currentYear = currentLocalTime.getFullYear()
