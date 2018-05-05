@@ -62,12 +62,13 @@ body {
 		document.getElementById("current-local-time").innerHTML = currentHour + ":" + currentMinute + ":" + currentSecond
 		document.getElementById("current-local-date").innerHTML = currentDay + "/" + currentMonth + "/" + currentYear
 
-		// Beijing time
-		var BeijingTime = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }))
-		var beijingHour = formatTime(BeijingTime.getHours())
-		var beijingMinute = formatTime(BeijingTime.getMinutes())
-		var beijingSecond = formatTime(BeijingTime.getSeconds())
-		document.getElementById("current-beijing-time").innerHTML = beijingHour + ":" + beijingMinute + ":" + beijingSecond
+		// Calculate Beijing Time according to local Irish time, be careful summer time.
+		var localTimeZoneDiffer = currentLocalTime.getTimezoneOffset();
+		// UTC+8 = -480 (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset)
+		var UTC8Differ = ( -480 - localTimeZoneDiffer) / 60
+		console.log(localTimeZoneDiffer)
+		var beijingHour = formatTime((currentHour - UTC8Differ) % 24)
+		document.getElementById("current-beijing-time").innerHTML = beijingHour + ":" + currentMinute + ":" + currentSecond
 	}
 
 	updateUI()
